@@ -1,2 +1,8 @@
 ---
-# defaults file for testrole
+# defaults for glusterfs role
+#
+gluster_ferm_support: yes
+gluster_interface: eth1
+
+gluster_client_group: false
+gluster_servers: false
