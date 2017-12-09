@@ -1,7 +1,7 @@
 - include: check_vars.yml
   tags:
     - glusterfs
-    - check_vars
+    - check
 
 - include: glusterfs.yml
   tags:
