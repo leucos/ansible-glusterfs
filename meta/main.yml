@@ -1,10 +1,10 @@
 ---
 galaxy_info:
   author: Michel Blanc
-  description: 
+  description: GlusterFS server role
   company: DevopsWorks
   license: MIT
-  min_ansible_version: 1.8
+  min_ansible_version: 2.3
   #
   # Below are all platforms currently available. Just uncomment
   # the ones that apply to your role. If you don't see your 
@@ -26,25 +26,4 @@ galaxy_info:
     - clustering
     - system
 
-dependencies:
-  - role: ansible-ferm
-    name: ansible-ferm
-    src: https://github.com/leucos/ansible-ferm.git
-    when: gluster_ferm_support
-    ferm_input_group_list:
-      - type: 'dport_accept'
-        dport: [ '24007' ]
-        saddr: '{{ play_hosts }}'
-        weight: '50'
-        filename: 'gluster_probes_accept'
-  - role: ansible-ferm
-    name: ansible-ferm
-    src: https://github.com/leucos/ansible-ferm.git
-    when: gluster_ferm_support
-    ferm_input_group_list:
-      - type: 'dport_accept'
-        protocols: ['tcp', 'udp']
-        dport: [ '111', '2049', '24007', '38465', '38466', '38467', '49152', '49153', '49154', '49155' ]
-        saddr: [ '{{ gluster_client_group }}' ]
-        weight: '50'
-        filename: 'gluster_clients_accept'
+dependencies: []
