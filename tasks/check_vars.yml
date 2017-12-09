@@ -3,5 +3,5 @@
     msg: "{{ item }} is not defined"
   when: item is not defined
   with_items:
-    - gluster_servers
+    - gluster_servers_group
     - gluster_interface

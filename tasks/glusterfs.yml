@@ -36,7 +36,7 @@
   changed_when: false
 
 - name: Shows first gluster server
-  debug: msg="servers[0] *{{gluster_servers[0]}}*"
+  debug: msg="servers[0] *{{gluster_servers_group[0]}}*"
   tags: glusterfs:probe
 
 - name: Show inventory hostname
@@ -48,7 +48,7 @@
   shell: "gluster peer probe {{ item }}-{{ gluster_interface }}"
   with_items: play_hosts
   when: item != inventory_hostname and 
-    inventory_hostname in gluster_servers[0]
+    inventory_hostname in gluster_servers_group[0]
   register: __gluster_probe
   changed_when: '"already in peer list" not in __gluster_probe.stdout'
   tags:
