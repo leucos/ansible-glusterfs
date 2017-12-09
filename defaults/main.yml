@@ -3,3 +3,5 @@
 #
 # gluster_interface: false
 # gluster_servers: false
+
+gluster_version: 3.12

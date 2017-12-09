@@ -2,14 +2,14 @@
   apt:
     pkg: "{{ item }}"
     state: present
-    update_cache: yes
     cache_valid_time: 3600
   with_items:
     - python-software-properties
 
 - name: Adds glusterfs PPA
   apt_repository:
-    repo: 'ppa:semiosis/ppa'
+    repo: "ppa:gluster/glusterfs-{{ gluster_version }}"
+    update_cache: yes
 
 - name: Install server
   apt:
