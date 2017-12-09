@@ -1,2 +1,8 @@
-- include: check_vars.yml tags=glusterfs,check_vars
-- include: glusterfs.yml tags=glusterfs
+- include: check_vars.yml
+  tags:
+    - glusterfs
+    - check_vars
+
+- include: glusterfs.yml
+  tags:
+    - glusterfs
