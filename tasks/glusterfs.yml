@@ -18,15 +18,15 @@
   register: __gluster_installed
 
 # Sometimes glusterfs-server doesn't come up nicely :(
-- name: Force glusterfs-server restart after install
+- name: Force glusterd restart after install
   service:
-    name: glusterfs-server
+    name: glusterd
     state: stopped
   when: __gluster_installed|changed
 
-- name: Force start glusterfs-server after install
+- name: Force start glusterd after install
   service:
-    name: glusterfs-server
+    name: glusterd
     state: started
   when: __gluster_installed|changed
 

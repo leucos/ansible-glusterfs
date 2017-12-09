@@ -1,2 +1,4 @@
 - name: Restart glusterd
-  service: name=glusterfs-server state=restarted
+  service:
+    name: glusterd
+    state: restarted
