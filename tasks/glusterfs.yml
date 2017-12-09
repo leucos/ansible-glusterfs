@@ -46,7 +46,7 @@
 
 - name: Probe peers
   shell: "gluster peer probe {{ item }}-{{ gluster_interface }}"
-  with_items: play_hosts
+  with_items: "{{ ansible_play_hosts }}"
   when: item != inventory_hostname and 
     inventory_hostname in groups[gluster_servers_group][0]
   register: __gluster_probe
