@@ -36,7 +36,7 @@
   changed_when: false
 
 - name: Shows first gluster server
-  debug: msg="servers[0] *{{gluster_servers_group[0]}}*"
+  debug: msg="servers[0] *{{ groups[gluster_servers_group][0]}}*"
   tags: glusterfs:probe
 
 - name: Show inventory hostname
