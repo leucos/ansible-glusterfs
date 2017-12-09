@@ -1,30 +1,33 @@
 - name: Adds prerequisites
-  apt: >
-    pkg={{ item }}
-    state=latest
-    update_cache=yes
-    cache_valid_time=3600
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
   with_items:
     - python-software-properties
 
 - name: Adds glusterfs PPA
-  apt_repository: repo='ppa:semiosis/ppa'
+  apt_repository:
+    repo: 'ppa:semiosis/ppa'
 
 - name: Install server
-  apt: >
-    pkg=glusterfs-server
-    state=latest
-  register: gluster_installed
-
-#- debug: msg="{{ play_hosts | join(',') | regex_replace('([^,]*)', '\\1-eth1')}}"
+  apt:
+    pkg: glusterfs-server
+    state: present
+  register: __gluster_installed
 
 # Sometimes glusterfs-server doesn't come up nicely :(
 - name: Force glusterfs-server restart after install
-  service: name=glusterfs-server state=stopped
-  when: gluster_installed|changed
+  service:
+    name: glusterfs-server
+    state: stopped
+  when: __gluster_installed|changed
 
 - name: Force start glusterfs-server after install
-  service: name=glusterfs-server state=started
+  service:
+    name: glusterfs-server
+    state: started
   when: gluster_installed|changed
 
 - name: Ping peers before probes
@@ -35,13 +38,15 @@
 - debug: msg="servers[0] *{{gluster_servers[0]}}*"
   tags: glusterfs:probe
 - debug: msg="inventory  *{{inventory_hostname}}*"
-  tags: glusterfs:probe
+  tags:
+    - glusterfs:probe
 
 - name: Probe peers
   shell: "gluster peer probe {{ item }}-{{ gluster_interface }}"
   with_items: play_hosts
   when: item != inventory_hostname and 
     inventory_hostname in gluster_servers[0]
-  register: gluster_probe
-  changed_when: '"already in peer list" not in gluster_probe.stdout'
-  tags: glusterfs:probe
+  register: __gluster_probe
+  changed_when: '"already in peer list" not in __gluster_probe.stdout'
+  tags:
+    - glusterfs:probe
