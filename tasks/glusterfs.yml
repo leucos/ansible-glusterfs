@@ -28,16 +28,19 @@
   service:
     name: glusterfs-server
     state: started
-  when: gluster_installed|changed
+  when: __gluster_installed|changed
 
 - name: Ping peers before probes
   command: ping -c3 {{ item }}-{{ gluster_interface }}
   with_items: play_hosts
   changed_when: false
 
-- debug: msg="servers[0] *{{gluster_servers[0]}}*"
+- name: Shows first gluster server
+  debug: msg="servers[0] *{{gluster_servers[0]}}*"
   tags: glusterfs:probe
-- debug: msg="inventory  *{{inventory_hostname}}*"
+
+- name: Show inventory hostname
+  debug: msg="inventory  *{{inventory_hostname}}*"
   tags:
     - glusterfs:probe
 
@@ -50,3 +53,4 @@
   changed_when: '"already in peer list" not in __gluster_probe.stdout'
   tags:
     - glusterfs:probe
+
