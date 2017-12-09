@@ -48,7 +48,7 @@
   shell: "gluster peer probe {{ item }}-{{ gluster_interface }}"
   with_items: play_hosts
   when: item != inventory_hostname and 
-    inventory_hostname in gluster_servers_group[0]
+    inventory_hostname in groups[gluster_servers_group][0]
   register: __gluster_probe
   changed_when: '"already in peer list" not in __gluster_probe.stdout'
   tags:
